@@ -37,3 +37,79 @@ def deal(player_order,number_of_decks):
 		player_hands[player_order[player_index]].append(card)
 		player_index+=1
 	return (player_hands)
+
+def count_players(player_hands):
+	num_ingame=0
+	for hand in player_hands:
+		if len(hand)>0:
+			num_ingame+=1
+	return(num_ingame)
+
+def test_face(card):
+	if card[0]=="A" or card[0]=="K" or card[0]=="Q" or card[0]=="J":
+		if card[0]=="A":
+			return(4)
+		if card[0]=="K":
+			return(3)
+		if card[0]=="Q":
+			return(2)
+		if card[0]=="J":
+			return(1)
+	else:
+		return(0)
+		
+def play_game(number_of_players,number_of_decks):
+	#set the order and deal cards
+	order=set_order(number_of_players)
+	hands=deal(order,number_of_decks)
+	
+	players_left=number_of_players
+	turn=0
+	player_turn=0
+	stack=[]
+	challenge=False
+	
+	while players_left>1:
+		#run the game until we have one person left
+		
+		#PLAY CARD
+		while len(hands[order[player_turn]])==0:
+			#if there are no cards in the players' hand, skip to the next player
+			player_turn+=1
+			player_turn=player_turn%number_of_players
+		stack.insert(0,hands[order[player_turn]].pop(0))
+		
+		#TEST FACE
+		if test_face(stack[0])>0:
+			challenge=True
+			countdown=test_face(stack[0])
+			player_turn+=1
+			player_turn=player_turn%number_of_players
+		else:
+			#TEST CHALLENGE
+			if challenge:
+				#TEST LOST CHALLENGE
+				if countdown>0:
+					player_turn+=0
+					player_turn=player_turn%number_of_players
+					countdown-=1
+				else:
+					challenge=False
+					player_turn-=1
+					player_turn=player_turn%number_of_players
+					stack.reverse()
+					hands[order[player_turn]].extend(stack)
+					stack.clear()
+			else:
+				player_turn+=1
+				player_turn=player_turn%number_of_players
+		
+		#CALC PLAYERS LEFT and INCREMENT TURN
+		players_left=count_players(hands)#check players left
+		turn+=1#update loop variable	
+		
+		#END OF LOOP
+		if turn>10000:
+			print("TOO MANY TURNS")
+			break#combat infinte loop
+	return([hands,stack])
