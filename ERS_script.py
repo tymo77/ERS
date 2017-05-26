@@ -3,6 +3,7 @@ import itertools
 import csv
 import datetime
 import os
+import rank
 """
 player_no is like a players' name
 player_index of the player order gives the player in that position. it is a position indicator.
