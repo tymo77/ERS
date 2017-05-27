@@ -88,7 +88,11 @@ def play_game(number_of_players,number_of_decks):
 			player_turn+=1
 			player_turn=player_turn%number_of_players
 		stack.insert(0,hands[order[player_turn]].pop(0))
+		if challenge:
+			countdown-=1
+		
 		dataline=dataline+str(turn)+'\t'+str(order[player_turn])+'\t'
+		
 		
 		#TEST FACE
 		if test_face(stack[0])>0:
@@ -103,7 +107,6 @@ def play_game(number_of_players,number_of_decks):
 				if countdown>0:
 					player_turn+=0
 					player_turn=player_turn%number_of_players
-					countdown-=1
 				else:
 					challenge=False
 					player_turn-=1
