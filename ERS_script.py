@@ -59,6 +59,15 @@ def test_face(card):
 		return(0)
 		
 def play_game(number_of_players,number_of_decks):
+	#initialize data output
+	data_file=open('output.dat','w')
+	header=''
+	for i in range(number_of_players):
+		header=header+'Player '+str(i)+'\t'
+	header='Turn\tPlayer Playing\t'+header
+	header=header+'Stack\n'
+	data_file.write(header)
+
 	#set the order and deal cards
 	order=set_order(number_of_players)
 	hands=deal(order,number_of_decks)
@@ -68,6 +77,7 @@ def play_game(number_of_players,number_of_decks):
 	player_turn=0
 	stack=[]
 	challenge=False
+	dataline=''
 	
 	while players_left>1:
 		#run the game until we have one person left
@@ -78,6 +88,7 @@ def play_game(number_of_players,number_of_decks):
 			player_turn+=1
 			player_turn=player_turn%number_of_players
 		stack.insert(0,hands[order[player_turn]].pop(0))
+		dataline=dataline+str(turn)+'\t'+str(order[player_turn])+'\t'
 		
 		#TEST FACE
 		if test_face(stack[0])>0:
@@ -104,6 +115,12 @@ def play_game(number_of_players,number_of_decks):
 				player_turn+=1
 				player_turn=player_turn%number_of_players
 		
+		for hand in hands:
+			dataline=dataline+str(hand)+'\t'
+		dataline=dataline+str(stack)+'\n'
+		data_file.write(dataline)
+		dataline=''
+		
 		#CALC PLAYERS LEFT and INCREMENT TURN
 		players_left=count_players(hands)#check players left
 		turn+=1#update loop variable	
@@ -112,4 +129,5 @@ def play_game(number_of_players,number_of_decks):
 		if turn>10000:
 			print("TOO MANY TURNS")
 			break#combat infinte loop
+	data_file.close()
 	return([hands,stack])
