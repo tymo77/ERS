@@ -1,30 +1,30 @@
 def rank_card(card):
 	if card[0]=="A":
-		score=13
-	elif card[0]=="K":
-		score=12
-	elif card[0]=="Q":
-		score=11
-	elif card[0]=="J":
-		score=10
-	elif card[0]=="T":
-		score=9
-	elif card[0]=="9":
-		score=8
-	elif card[0]=="8":
-		score=7
-	elif card[0]=="7":
-		score=6
-	elif card[0]=="6":
-		score=5
-	elif card[0]=="5":
-		score=4
-	elif card[0]=="4":
-		score=3
-	elif card[0]=="3":
-		score=2
-	elif card[0]=="2":
 		score=1
+	elif card[0]=="K":
+		score=2
+	elif card[0]=="Q":
+		score=3
+	elif card[0]=="J":
+		score=4
+	elif card[0]=="T":
+		score=0
+	elif card[0]=="9":
+		score=0
+	elif card[0]=="8":
+		score=0
+	elif card[0]=="7":
+		score=0
+	elif card[0]=="6":
+		score=0
+	elif card[0]=="5":
+		score=0
+	elif card[0]=="4":
+		score=0
+	elif card[0]=="3":
+		score=0
+	elif card[0]=="2":
+		score=0
 	else:
 		score=0
 	return score
